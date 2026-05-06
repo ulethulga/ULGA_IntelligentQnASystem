@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: ulga_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ulgaragsystem
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ulga_backend
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      DJANGO_SECRET_KEY: change-this
+      DJANGO_DEBUG: "True"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+      MYSQL_DB: ulgaragsystem
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      OLLAMA_LLM_MODEL: qwen3-coder:latest
+      OLLAMA_EMBEDDING_MODEL: qwen3-embedding:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./resources:/app/resources
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ulga_frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      VITE_API_BASE_URL: http://localhost:8000/api
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mysql_data:

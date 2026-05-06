@@ -1,0 +1,38 @@
+
+To set up
+=============
+Install python
+Install django
+Install npm
+
+npm install
+
+Migrate the django project
+==================================================
+C:/Jobs/git/Mohsin/ULGAProjects/ULGARAGSystem/.venv/Scripts/python.exe manage.py migrate
+
+To run server
+=================================================
+C:/Jobs/git/Mohsin/ULGAProjects/ULGARAGSystem/.venv/Scripts/python.exe manage.py runserver 0.0.0.0:8000
+
+npm run dev -- --host
+
+
+Then, app will be running (by default):
+Backend API: http://localhost:8000/api/
+Frontend UI: http://localhost:5173/
+
+
+Creating django is_superuser
+==================================================
+C:/Jobs/git/Mohsin/ULGAProjects/ULGARAGSystem/.venv/Scripts/python.exe manage.py createsuperuser
+
+
+
+Index the required docs (pdf)
+
+Then ask your question
+
+Sample question: Maximum number of hours can a Graduate student work per academic calender?
+
+
